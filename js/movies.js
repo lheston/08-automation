@@ -11,8 +11,23 @@ $('form').submit(function(event) {
    console.log('Sending request to '+url);
 
    //send the AJAX request
-   $.get(url);
+   var promise = $.get(url);
 
+   promise.then(function(data){
+       console.log(data);
+       //talk about it at a key!
+       var theMovies = data.Search
+       // var theMovies = data['Search']
+       //console.log(theMovies);
+       $('#movies').empty();
+       var list = $('#movies').append('</ul>');
+
+       theMovies.forEach(function(movie){
+           list.append('<li><img src="'+
+           movie.Poster+'"> '+
+           movie.Title+'</li>');
+       });
+   })
 
    //don't submit form as usual
    return false; //jQuery specific version of event.preventDefault()
